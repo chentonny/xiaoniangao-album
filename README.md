@@ -77,8 +77,8 @@
 1. 克隆项目代码
 
 ```bash
-git clone <项目仓库地址>
-cd 小年糕相册/frontend
+git clone git@github.com:chentonny/xiaoniangao-album.git
+cd xiaoniangao-album/frontend
 ```
 
 2. 安装依赖
@@ -247,9 +247,9 @@ http://localhost:8082/api/swagger-ui.html
 
 如有任何问题或建议，欢迎联系我们：
 
-- 项目维护者: [项目维护者名称]
-- 邮箱: [维护者邮箱]
-- GitHub: [项目GitHub地址]
+- 项目维护者: [DBH]
+- 邮箱: [837860403@qq.com]
+- GitHub: [https://github.com/chentonny/xiaoniangao-album]
 
 ---
 
