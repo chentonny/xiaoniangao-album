@@ -1,0 +1,79 @@
+# 项目根目录.gitignore文件
+
+# 前后端通用忽略项
+*.log
+*.tmp
+*.temp
+*.cache
+.env
+.env.local
+.env.production.local
+.env.development.local
+.env.test.local
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# IDE配置文件
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 前端相关
+node_modules/
+dist/
+dist-ssr/
+build/
+*.local
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# 后端相关
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Maven相关
+.mvn/
+maven-wrapper.jar
+
+# Gradle相关（如果使用）
+.gradle/
+build/
+
+# 测试覆盖率
+coverage/
+.nyc_output/
+
+# 媒体文件存储目录
+media-files/
+
+# 临时目录
+tmp/
+temp/
+
+# 日志目录
+logs/
+
+# 数据库备份文件
+*.sql
+*.sql.gz
+*.bak
+
+# 编辑器备份文件
+*.swp
+*.swo
+*~
+
+# 操作系统临时文件
+*.tmp
+*.temp

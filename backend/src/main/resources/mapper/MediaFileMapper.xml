@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.xiaoniangao.mapper.MediaFileMapper">
+
+    <select id="findByUserId" resultType="com.example.xiaoniangao.entity.MediaFile">
+        SELECT * FROM media 
+        WHERE user_id = #{userId}
+        <if test="keyword != null and keyword != ''">
+            AND (title LIKE CONCAT('%', #{keyword}, '%') OR description LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+        ORDER BY create_time DESC
+        LIMIT #{start}, #{size}
+    </select>
+
+    <select id="findPublicMedia" resultType="com.example.xiaoniangao.entity.MediaFile">
+        SELECT * FROM media 
+        <if test="keyword != null and keyword != ''">
+            WHERE title LIKE CONCAT('%', #{keyword}, '%') OR description LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        ORDER BY create_time DESC
+        LIMIT #{start}, #{size}
+    </select>
+
+    <select id="countByUserId" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM media 
+        WHERE user_id = #{userId}
+        <if test="keyword != null and keyword != ''">
+            AND (title LIKE CONCAT('%', #{keyword}, '%') OR description LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+    </select>
+
+    <select id="countPublicMedia" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM media 
+        <if test="keyword != null and keyword != ''">
+            WHERE title LIKE CONCAT('%', #{keyword}, '%') OR description LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+    </select>
+
+    <!-- 新增查询：获取最新媒体并关联用户表获取用户名（支持分页） -->
+    <select id="findRecentMediaWithUser" resultType="com.example.xiaoniangao.entity.MediaFile">
+        SELECT 
+            m.id, 
+            m.file_path as filePath, 
+            m.file_type as fileType, 
+            m.file_size as fileSize, 
+            m.title as title, -- 直接使用title字段名，与实体类保持一致
+            m.description as description, 
+            m.user_id as userId, -- 直接使用userId字段名，与实体类保持一致
+            u.user_name as uploaderName, 
+            m.create_time as createTime, 
+            m.update_time as updateTime,
+            -- 为coverPath提供默认值，使用filePath作为备选
+            (CASE WHEN m.cover_path IS NULL THEN m.file_path ELSE m.cover_path END) as coverPath,
+            m.view_count as viewCount,
+            m.status as status,
+            '' as fileTag,
+            SUBSTRING_INDEX(m.file_path, '/', -1) as fileName
+        FROM media m 
+        LEFT JOIN users u ON m.user_id = u.id
+        ORDER BY m.id DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+    
+    <!-- 获取最新媒体总数 -->
+    <select id="countRecentMedia" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM media
+    </select>
+</mapper>

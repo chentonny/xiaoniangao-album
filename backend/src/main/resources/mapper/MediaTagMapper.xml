@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.xiaoniangao.mapper.MediaTagMapper">
+
+    <!-- 根据媒体ID查找标签ID列表 -->
+    <select id="findTagIdsByMediaId" resultType="java.lang.Long">
+        SELECT tag_id FROM media_tag WHERE media_id = #{mediaId}
+    </select>
+
+    <!-- 根据媒体ID删除关联关系 -->
+    <delete id="deleteByMediaId">
+        DELETE FROM media_tag WHERE media_id = #{mediaId}
+    </delete>
+
+    <!-- 根据标签ID删除关联关系 -->
+    <delete id="deleteByTagId">
+        DELETE FROM media_tag WHERE tag_id = #{tagId}
+    </delete>
+
+    <!-- 根据媒体ID查找标签信息 -->
+    <select id="findTagsByMediaId" resultType="map">
+        SELECT t.*, t.tag_name as tag_name FROM tag t
+        INNER JOIN media_tag mt ON t.id = mt.tag_id
+        WHERE mt.media_id = #{mediaId}
+    </select>
+
+    <!-- 批量插入媒体标签关联 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO media_tag (media_id, tag_id, create_time)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.mediaId}, #{item.tagId}, NOW())
+        </foreach>
+    </insert>
+</mapper>

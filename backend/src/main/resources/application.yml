@@ -1,0 +1,32 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /api
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/czwdb?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: Aa1234567890!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 200MB
+      max-request-size: 200MB
+jwt:
+  secret: eGliaWFuZ2FvX2FsdW1iX3NlY3JldF9rZXlfMjAyNDA1MjJfZ2VuZXNpZ24=
+# 上面是"xiaoniangao_album_secret_key_20240522_generate"的Base64编码
+  expiration: 86400000 # token过期时间（毫秒），这里设置为24小时
+  token-prefix: Bearer # token前缀
+  header-string: Authorization # 请求头中存放token的字段名
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.xiaoniangao.entity
+  configuration:
+    map-underscore-to-camel-case: true
+
+file:
+  upload:
+    path: c:/dev/media-files/
